@@ -81,6 +81,8 @@ LOCAL_SHARED_LIBRARIES += libqdMetaData libqdutils
 LOCAL_SHARED_LIBRARIES += android.hidl.token@1.0-utils
 LOCAL_SHARED_LIBRARIES += android.hardware.graphics.bufferqueue@1.0
 
+LOCAL_HEADER_LIBRARIES := libnativebase_headers
+
 LOCAL_CLANG := true
 LOCAL_MODULE_RELATIVE_PATH := hw
 LOCAL_MODULE := camera.msm8994
