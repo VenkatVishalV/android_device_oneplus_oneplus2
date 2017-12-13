@@ -167,8 +167,7 @@ PRODUCT_PACKAGES += \
 # Fingerprint sensor
 PRODUCT_PACKAGES += \
     android.hardware.biometrics.fingerprint@2.0-service \
-    fingerprint.msm8994 \
-    OneplusPocketMode
+    fingerprint.msm8994 
 
 # For config.fs
 PRODUCT_PACKAGES += \
@@ -250,6 +249,10 @@ PRODUCT_PACKAGES += \
     libOmxVidcCommon \
     libstagefrighthw \
     libstagefright_soft_flacdec
+
+#PocketMode
+#PRODUCT_PACKAGES += \
+    OneplusPocketMode
 
 # Power
 PRODUCT_PACKAGES += \
