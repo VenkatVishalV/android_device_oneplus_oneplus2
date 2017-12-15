@@ -193,10 +193,6 @@ PRODUCT_PACKAGES += \
     sap.conf \
     xtwifi.conf
 
-# HIDL
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/manifest.xml:system/vendor/manifest.xml
-
 # IPv6
 PRODUCT_PACKAGES += \
     ebtables \
@@ -251,9 +247,6 @@ PRODUCT_PACKAGES += \
     libOmxQcelp13Enc \
     libOmxSwVencMpeg4 \
     libOmxSwVencHevc \
-    libOmxVdec \
-    libOmxVdecHevc \
-    libOmxVenc \
     libOmxVidcCommon \
     libstagefrighthw \
     libstagefright_soft_flacdec
