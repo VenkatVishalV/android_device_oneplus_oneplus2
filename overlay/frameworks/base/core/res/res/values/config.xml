@@ -416,15 +416,15 @@
 
     <!-- Default value for proximity check on screen wake
          NOTE ! - Enable for devices that have a fast response
-         proximity sensor (ideally < 300ms) -->
+         proximity sensor (ideally < 300ms) 
     <bool name="config_proximityCheckOnWake">true</bool>
-    <bool name="config_proximityCheckOnWakeEnabledByDefault">true</bool>
+    <bool name="config_proximityCheckOnWakeEnabledByDefault">true</bool> -->
 
-    <!-- Proximity check timeout -->
-    <integer name="config_proximityCheckTimeout">100</integer>
+    <!-- Proximity check timeout 
+    <integer name="config_proximityCheckTimeout">100</integer> -->
 
-    <!-- Whether notify fingerprint client of successful cancelled authentication -->
-    <bool name="config_notifyClientOnFingerprintCancelSuccess">true</bool>
+    <!-- Whether notify fingerprint client of successful cancelled authentication 
+    <bool name="config_notifyClientOnFingerprintCancelSuccess">true</bool> -->
 
     <!-- Is the battery LED intrusive? Used to decide if there should be a disable option -->
     <bool name="config_intrusiveBatteryLed">true</bool>
@@ -437,11 +437,11 @@
          Used to decide if we show pulse settings -->
     <bool name="config_ledCanPulse">true</bool>
 
-    <!-- doze always on -->
-    <bool name="config_enableDozeAlwaysOn">true</bool>
+    <!-- doze always on 
+    <bool name="config_enableDozeAlwaysOn">true</bool> -->
 
-    <!-- Should proximity check also affect fingerprint reader-->
-    <bool name="config_proximityCheckOnFingerprintWake">true</bool>
+    <!-- Should proximity check also affect fingerprint reader
+    <bool name="config_proximityCheckOnFingerprintWake">true</bool> -->
 
     <!-- Button brightness -->
     <integer name="config_buttonBrightnessSettingDefault">255</integer>
