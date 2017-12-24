@@ -464,6 +464,7 @@ vendor/lib64/libril-qcril-hook-oem.so
 vendor/lib64/libsystem_health_mon.so
 vendor/lib64/libxml.so
 vendor/qcril.db
+vendor/lib64/libsettings.so|15a3f56004b7ebec96c8bfe35ef2f05ae6cb3ebe
 
 # Radio - IMS
 bin/ims_rtp_daemon
