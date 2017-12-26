@@ -1024,7 +1024,7 @@ int IPACM_Wan::handle_route_add_evt(ipa_ip_type iptype)
 		break;
 	}
 
-	if(tx_prop->tx[cnt].hdr_name[0] != '\0')
+	//if(tx_prop->tx[cnt].hdr_name != NULL)
 	{
 	    memset(&sCopyHeader, 0, sizeof(sCopyHeader));
 	    memcpy(sCopyHeader.name,
@@ -1104,7 +1104,7 @@ int IPACM_Wan::handle_route_add_evt(ipa_ip_type iptype)
 	    		strcpy(rt_rule->rt_tbl_name, IPACM_Iface::ipacmcfg->rt_tbl_v6.name);
 			}
 
-			if (tx_prop->tx[tx_index].hdr_name[0] != '\0')
+			//if (tx_prop->tx[tx_index].hdr_name !=  NULL)
 			{
 				IPACMDBG_H(" TX- header hdl %s \n", tx_prop->tx[tx_index].hdr_name);
 				memset(&sRetHeader, 0, sizeof(sRetHeader));
@@ -1686,28 +1686,36 @@ int IPACM_Wan::config_dft_firewall_rules(ipa_ip_type iptype)
 	memset(&firewall_config, 0, sizeof(firewall_config));
 	strncpy(firewall_config.firewall_config_file, "/etc/mobileap_firewall.xml", sizeof(firewall_config.firewall_config_file));
 
-	IPACMDBG_H("Firewall XML file is %s \n", firewall_config.firewall_config_file);
-	if (IPACM_SUCCESS == IPACM_read_firewall_xml(firewall_config.firewall_config_file, &firewall_config))
+	//if (firewall_config.firewall_config_file)
 	{
-		IPACMDBG_H("QCMAP Firewall XML read OK \n");
-		/* find the number of v4/v6 firewall rules */
-		for (i = 0; i < firewall_config.num_extd_firewall_entries; i++)
+		IPACMDBG_H("Firewall XML file is %s \n", firewall_config.firewall_config_file);
+		if (IPACM_SUCCESS == IPACM_read_firewall_xml(firewall_config.firewall_config_file, &firewall_config))
 		{
-			if (firewall_config.extd_firewall_entries[i].ip_vsn == 4)
-			{
-				rule_v4++;
-			}
-			else
-			{
-				rule_v6++;
-			}
-		}
-		IPACMDBG_H("firewall rule v4:%d v6:%d total:%d\n", rule_v4, rule_v6, firewall_config.num_extd_firewall_entries);
-	}
-	else
+			IPACMDBG_H("QCMAP Firewall XML read OK \n");
+	/* find the number of v4/v6 firewall rules */
+	for (i = 0; i < firewall_config.num_extd_firewall_entries; i++)
 	{
-		IPACMERR("QCMAP Firewall XML read failed, no that file, use default configuration \n");
+		if (firewall_config.extd_firewall_entries[i].ip_vsn == 4)
+		{
+			rule_v4++;
+		}
+		else
+		{
+			rule_v6++;
+		}
 	}
+	IPACMDBG_H("firewall rule v4:%d v6:%d total:%d\n", rule_v4, rule_v6, firewall_config.num_extd_firewall_entries);
+		}
+		else
+		{
+			IPACMERR("QCMAP Firewall XML read failed, no that file, use default configuration \n");
+		}
+	}
+	/*else
+	{
+		IPACMERR("No firewall xml mentioned \n");
+		return IPACM_FAILURE;
+	}*/
 
 	/* construct ipa_ioc_add_flt_rule with N firewall rules */
 	ipa_ioc_add_flt_rule *m_pFilteringTable = NULL;
@@ -2340,15 +2348,23 @@ int IPACM_Wan::config_dft_firewall_rules_ex(struct ipa_flt_rule_add *rules, int 
 	memset(&firewall_config, 0, sizeof(firewall_config));
 	strncpy(firewall_config.firewall_config_file, "/etc/mobileap_firewall.xml", sizeof(firewall_config.firewall_config_file));
 
-	IPACMDBG_H("Firewall XML file is %s \n", firewall_config.firewall_config_file);
-	if (IPACM_SUCCESS == IPACM_read_firewall_xml(firewall_config.firewall_config_file, &firewall_config))
+	//if (firewall_config.firewall_config_file)
 	{
-		IPACMDBG_H("QCMAP Firewall XML read OK \n");
+		IPACMDBG_H("Firewall XML file is %s \n", firewall_config.firewall_config_file);
+		if (IPACM_SUCCESS == IPACM_read_firewall_xml(firewall_config.firewall_config_file, &firewall_config))
+		{
+			IPACMDBG_H("QCMAP Firewall XML read OK \n");
+		}
+		else
+		{
+			IPACMERR("QCMAP Firewall XML read failed, no that file, use default configuration \n");
+		}
 	}
-	else
-	{
-		IPACMERR("QCMAP Firewall XML read failed, no that file, use default configuration \n");
-	}
+	/*else
+	//{
+		IPACMERR("No firewall xml mentioned \n");
+		return IPACM_FAILURE;
+	}*/
 
 	/* add IPv6 frag rule when firewall is enabled*/
 	if(iptype == IPA_IP_v6 && firewall_config.firewall_enable == true)

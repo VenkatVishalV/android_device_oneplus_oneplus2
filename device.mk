@@ -58,8 +58,8 @@ PRODUCT_COPY_FILES += \
 TARGET_SCREEN_HEIGHT := 1920
 TARGET_SCREEN_WIDTH := 1080
 
-$(call inherit-product, frameworks/native/build/phone-xxxhdpi-3072-dalvik-heap.mk)
-$(call inherit-product, frameworks/native/build/phone-xxxhdpi-3072-hwui-memory.mk)
+$(call inherit-product, frameworks/native/build/phone-xxxhdpi-4096-dalvik-heap.mk)
+$(call inherit-product, frameworks/native/build/phone-xxxhdpi-4096-hwui-memory.mk)
 
 # Device uses high-density artwork where available
 PRODUCT_AAPT_CONFIG := normal
@@ -161,6 +161,10 @@ PRODUCT_PACKAGES += \
     ebtables \
     ethertypes
 
+# IRQ
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/msm_irqbalance.conf:system/vendor/etc/msm_irqbalance.conf
+
 # IRSC
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/sec_config:system/etc/sec_config
@@ -197,6 +201,7 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     libc2dcolorconvert \
     libdashplayer \
+    libdivxdrmdecrypt \
     libextmedia_jni \
     libOmxAacEnc \
     libOmxAmrEnc \
@@ -218,16 +223,16 @@ PRODUCT_PACKAGES += \
 
 # Ramdisk
 PRODUCT_PACKAGES += \
-    fstab.qcom \
-    init.oneplus2.power.sh \
     init.qcom.bt.sh \
+    init.zram.sh
+
+PRODUCT_PACKAGES += \
+    fstab.qcom \
     init.qcom.power.rc \
-    init.qcom.recovery \
     init.qcom.rc \
     init.qcom.sh \
     init.qcom.usb.rc \
     init.qcom.usb.sh \
-    init.zram.sh \
     ueventd.qcom.rc
 
 # RIL
@@ -239,6 +244,9 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     sensors.msm8994 \
     sensors.ssc.wrapper
+
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/sensors/hals.conf:system/etc/sensors/hals.conf
 
 # USB
 PRODUCT_PACKAGES += \
@@ -269,4 +277,9 @@ PRODUCT_COPY_FILES += \
 
 # Inherit from oppo-common
 $(call inherit-product, device/oppo/common/common.mk)
+
+#QUAIL STAR
+I_WANT_A_QUAIL_STAR=true
+
+
 $(call inherit-product, device/oneplus/oneplus2/camera/camera.mk)
