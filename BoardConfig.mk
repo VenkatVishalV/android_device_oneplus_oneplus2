@@ -210,7 +210,7 @@ WITH_DEXPREOPT := false
 DONT_DEXPREOPT_PREBUILTS := true
 
 # Recovery
-TARGET_RECOVERY_FSTAB := $(PLATFORM_PATH)/rootdir/etc/fstab.qcom
+TARGET_RECOVERY_FSTAB := $(PLATFORM_PATH)/rootdir/etc/recovery.fstab
 
 # inherit from the proprietary version
 -include vendor/oneplus/oneplus2/BoardConfigVendor.mk
