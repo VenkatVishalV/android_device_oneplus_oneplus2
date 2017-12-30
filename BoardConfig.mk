@@ -73,7 +73,7 @@ TARGET_KERNEL_CONFIG := toxic_oneplus2_defconfig
 TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-linux-android-
 
 # ANT+
-BOARD_ANT_WIRELESS_DEVICE := "qualcomm-uart"
+#BOARD_ANT_WIRELESS_DEVICE := "qualcomm-uart"
 
 # Audio
 AUDIO_FEATURE_ENABLED_ACDB_LICENSE := true
@@ -115,8 +115,8 @@ BOARD_BUILD_OP2_CAMERA := true
 # Charger
 BOARD_CHARGER_DISABLE_INIT_BLANK := true
 
-# Lineage Hardware
-BOARD_HARDWARE_CLASS += $(PLATFORM_PATH)/lineagehw
+# CM Hardware
+BOARD_HARDWARE_CLASS += $(PLATFORM_PATH)/cmhw
 TARGET_TAP_TO_WAKE_NODE := "/proc/touchpanel/double_tap_enable"
 
 # Cpusets
@@ -214,3 +214,5 @@ TARGET_RECOVERY_FSTAB := $(PLATFORM_PATH)/rootdir/etc/recovery.fstab
 
 # inherit from the proprietary version
 -include vendor/oneplus/oneplus2/BoardConfigVendor.mk
+
+ALLOW_MISSING_DEPENDENCIES=true
