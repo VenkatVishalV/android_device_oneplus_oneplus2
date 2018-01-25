@@ -85,7 +85,6 @@ PRODUCT_CHARACTERISTICS := nosdcard
 
 # Audio
 PRODUCT_PACKAGES += \
-    audiod \
     audio.a2dp.default \
     audio.primary.msm8994 \
     audio.r_submix.default \
@@ -93,7 +92,6 @@ PRODUCT_PACKAGES += \
     audio_policy.msm8994 \
     libaudio-resampler \
     libqcompostprocbundle \
-    libqcomvoiceprocessingdescriptors \
     libqcomvisualizer \
     libqcomvoiceprocessing \
     tinymix
@@ -101,7 +99,9 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     android.hardware.audio@2.0-impl \
     android.hardware.audio.effect@2.0-impl \
-    android.hardware.radio.deprecated-V1.0-java 
+    android.hardware.broadcastradio@1.0-impl \
+    android.hardware.radio.deprecated-V1.0-java \
+    android.hardware.soundtrigger@2.0-impl
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/audio/aanc_tuning_mixer.txt:system/etc/aanc_tuning_mixer.txt \
@@ -152,10 +152,6 @@ PRODUCT_PACKAGES += \
     liboverlay \
     libtinyxml
 
-# Doze mode
-PRODUCT_PACKAGES += \
-    OnePlusDoze
-
 # Filesystem management tools
 PRODUCT_PACKAGES += \
     e2fsck \
@@ -165,8 +161,7 @@ PRODUCT_PACKAGES += \
 # Fingerprint sensor
 PRODUCT_PACKAGES += \
     android.hardware.biometrics.fingerprint@2.0-service \
-    fingerprint.msm8994 \
-    OneplusPocketMode
+    fingerprint.msm8994
 
 # For config.fs
 PRODUCT_PACKAGES += \
@@ -191,10 +186,18 @@ PRODUCT_PACKAGES += \
     sap.conf \
     xtwifi.conf
 
+# HIDL
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/manifest.xml:system/vendor/manifest.xml
+
 # IPv6
 PRODUCT_PACKAGES += \
     ebtables \
     ethertypes
+
+# IRQ
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/msm_irqbalance.conf:system/vendor/etc/msm_irqbalance.conf
 
 # IRSC
 PRODUCT_COPY_FILES += \
@@ -237,6 +240,7 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     libc2dcolorconvert \
     libdashplayer \
+    libdivxdrmdecrypt \
     libextmedia_jni \
     libOmxAacEnc \
     libOmxAmrEnc \
@@ -257,32 +261,17 @@ PRODUCT_PACKAGES += \
     android.hardware.power@1.0-impl \
     power.msm8994
 
-# Prebuilts
-PRODUCT_PACKAGES += \
-    OnePlusCamera \
-    OnePlusCameraService 
-
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/prebuilts/lib/libfilter-sdk.so:system/lib/libfilter-sdk.so \
-    $(LOCAL_PATH)/prebuilts/lib/libopbaselib.so:system/lib/libopbaselib.so \
-    $(LOCAL_PATH)/prebuilts/lib/libopcamera.so:system/lib/libopcamera.so \
-    $(LOCAL_PATH)/prebuilts/lib/libopcameralib.so:system/lib/libopcameralib.so \
-    $(LOCAL_PATH)/prebuilts/lib64/libfilter-sdk.so:system/lib64/libfilter-sdk.so \
-    $(LOCAL_PATH)/prebuilts/lib64/libopbaselib.so:system/lib64/libopbaselib.so \
-    $(LOCAL_PATH)/prebuilts/lib64/libopcamera.so:system/lib64/libopcamera.so \
-    $(LOCAL_PATH)/prebuilts/lib64/libopcameralib.so:system/lib64/libopcameralib.so
-
-
 # Ramdisk
 PRODUCT_PACKAGES += \
     fstab.qcom \
+    init.oneplus2.power.sh \
     init.qcom.bt.sh \
     init.qcom.power.rc \
-    init.qcom.recovery \
     init.qcom.rc \
     init.qcom.sh \
     init.qcom.usb.rc \
     init.qcom.usb.sh \
+    init.recovery.oneplus2.rc \
     init.zram.sh \
     ueventd.qcom.rc
 
@@ -296,7 +285,6 @@ PRODUCT_PACKAGES += \
     librmnetctl \
     libxml2 \
     rild_socket
-    
 
 # Sensors
 PRODUCT_PACKAGES += \
@@ -310,6 +298,11 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/seccomp/mediacodec.policy:system/vendor/etc/seccomp_policy/mediacodec.policy \
     $(LOCAL_PATH)/seccomp/mediaextractor.policy:system/vendor/etc/seccomp_policy/mediaextractor.policy
+
+# TFA calibration
+PRODUCT_PACKAGES += \
+    init.tfa.sh \
+    tinyplay
 
 # USB
 PRODUCT_PACKAGES += \
@@ -345,17 +338,6 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/wifi/wpa_supplicant_overlay.conf:system/etc/wifi/wpa_supplicant_overlay.conf \
     $(LOCAL_PATH)/wifi/WCNSS_cfg.dat:system/etc/wifi/WCNSS_cfg.dat \
     $(LOCAL_PATH)/wifi/WCNSS_qcom_cfg.ini:system/etc/wifi/WCNSS_qcom_cfg.ini
-
-# facelock properties
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.facelock.black_timeout=700 \
-    ro.facelock.det_timeout=2500 \
-    ro.facelock.rec_timeout=3500 \
-    ro.facelock.est_max_time=600
-
-# Data switch hack
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/rootdir/etc/netmgrd_control.sh:system/etc/netmgrd_control.sh
 
 # Inherit from oppo-common
 $(call inherit-product, device/oppo/common/common.mk)

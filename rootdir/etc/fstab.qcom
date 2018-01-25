@@ -5,7 +5,7 @@
 #TODO: Add 'check' as fs_mgr_flags with data partition.
 # Currently we dont have e2fsck compiled. So fs check would failed.
 
-#<src>                                                					 <mnt_point>       <type>  <mnt_flags and options>                                                                                         <fs_mgr_flags>
+#<src>                                                                   <mnt_point>       <type>  <mnt_flags and options>                                                                                         <fs_mgr_flags>
 /dev/block/platform/soc.0/f9824900.sdhci/by-name/boot                    /boot             emmc    defaults                                                                                                        defaults
 /dev/block/platform/soc.0/f9824900.sdhci/by-name/recovery                /recovery         emmc    defaults                                                                                                        defaults
 /dev/block/platform/soc.0/f9824900.sdhci/by-name/userdata                /data             f2fs    rw,discard,nosuid,nodev,noatime,inline_xattr,noinline_dentry                                                    wait,check,encryptable=footer
@@ -18,4 +18,5 @@
 /dev/block/platform/soc.0/f9824900.sdhci/by-name/modem                   /firmware         vfat    ro,shortname=lower,uid=1000,gid=1000,dmask=227,fmask=337                                                        wait
 /dev/block/platform/soc.0/f9824900.sdhci/by-name/bluetooth               /bt_firmware      vfat    ro,shortname=lower,uid=1002,gid=3002,dmask=222,fmask=333                                                        wait
 
-/devices/soc.0/f9200000.ssusb/f9200000.dwc3/xhci-hcd* auto                auto    defaults                                                                                                        voldmanaged=usbdisk:auto
+/devices/soc.0/f9200000.ssusb/f9200000.dwc3/xhci-hcd*                    auto              auto    defaults                                                                                                        voldmanaged=usbdisk:auto
+

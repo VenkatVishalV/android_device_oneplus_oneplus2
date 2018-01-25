@@ -30,7 +30,6 @@ qcom.bluetooth.soc=rome
 ro.bluetooth.a4wp=true
 ro.bluetooth.emb_wp_mode=true
 ro.bluetooth.wipower=true
-persist.bt.enableAptXHD=true
 
 # Camera
 camera.disable_zsl_mode=1
@@ -147,6 +146,9 @@ persist.data.qmi.adb_logmask=0
 ro.qc.sdk.sensors.gestures=true
 ro.qc.sdk.gestures.camera=false
 ro.qc.sdk.camera.facialproc=false
+
+# Storage
+ro.sys.sdcardfs=true
 
 # Time services
 persist.timed.enable=true

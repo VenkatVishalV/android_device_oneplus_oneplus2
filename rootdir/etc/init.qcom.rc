@@ -152,10 +152,6 @@ on init
     chown root system /proc/tri-state-key/keyCode_bottom
     chmod 0660 /proc/tri-state-key/keyCode_bottom
 
-    #Proximity state
-    chmod 0660 /sys/devices/soc/soc:fpc_fpc1020/proximity_state
-    chown system system /sys/devices/soc/soc:fpc_fpc1020/proximity_state
- 
     # PCC Calibration
     chown system system /sys/devices/virtual/graphics/fb0/rgb
     chmod 0660 /sys/devices/virtual/graphics/fb0/rgb
@@ -215,6 +211,7 @@ on init
     chown system drmrpc /sys/devices/soc.0/f9924000.i2c/i2c-2/2-0020/input/input0/secure_touch
     chown system drmrpc /sys/devices/soc.0/f9924000.i2c/i2c-2/2-004a/secure_touch_enable
     chown system drmrpc /sys/devices/soc.0/f9924000.i2c/i2c-2/2-004a/secure_touch
+    write /proc/sys/kernel/sched_boost 1
     write /proc/sys/vm/dirty_ratio 15
     write /proc/sys/vm/dirty_background_ratio 1
 
@@ -492,8 +489,9 @@ on post-fs-data
 on property:sys.boot_completed=1
     #allow CPUs to go in deeper idle state than C0
     write /sys/module/lpm_levels/parameters/sleep_disabled 0
-    start zram-init
     start perfd
+    start tfa-sh
+    start zram-init
     write /dev/kmsg "Boot completed "
 
     # Set Memory parameters
@@ -508,13 +506,6 @@ service qcamerasvr /system/bin/mm-qcamera-daemon
     user camera
     group camera system inet input graphics
     writepid /dev/cpuset/camera-daemon/tasks
-
-service laserinit /system/bin/laser_init
-    class late_start
-    user root
-    group root
-    oneshot
-    writepid /dev/cpuset/system-background/tasks
 
 service qseecomd /system/bin/qseecomd
     class core
@@ -678,7 +669,6 @@ service energy-awareness /system/bin/energy-awareness
     user root
     group system
     oneshot
-    writepid /dev/cpuset/system-background/tasks
 
 # corefile limit and ETB enabling
 on property:persist.debug.trace=1
@@ -844,6 +834,11 @@ service qmuxd /system/bin/qmuxd
     group radio audio bluetooth gps oem_2950
     writepid /dev/cpuset/system-background/tasks
 
+service netmgrd /system/bin/netmgrd
+    class main
+    group radio system
+    writepid /dev/cpuset/system-background/tasks
+
 service ipacm-diag /system/bin/ipacm-diag
     class main
     user system
@@ -939,7 +934,7 @@ service cnss-daemon /system/bin/cnss-daemon -n -l
 service loc_launcher /system/bin/loc_launcher
     #loc_launcher will start as root and set its uid to gps
     class late_start
-    group gps inet net_raw diag net_admin wifi
+    group gps inet net_raw oem_2950 net_admin wifi
     writepid /dev/cpuset/system-background/tasks
 
 service drmdiag /system/bin/drmdiagapp
@@ -975,7 +970,7 @@ service battery_monitor /system/bin/battery_monitor
 service ril-daemon2 /vendor/bin/hw/rild -c 2
     class main
     user radio
-    group radio cache inet misc audio log readproc wakelock
+    group radio cache inet misc audio log readproc wakelock oem_2950
     capabilities BLOCK_SUSPEND NET_ADMIN NET_RAW
 
 service profiler_daemon /system/bin/profiler_daemon
@@ -1022,9 +1017,4 @@ service msm_irqbalance /system/bin/msm_irqbalance -f /system/vendor/etc/msm_irqb
     user root
     group root
     disabled
-    writepid /dev/cpuset/system-background/tasks
-
-# Data Switch hack
-service netmgrd /system/bin/sh /system/etc/netmgrd_control.sh
-    class main
     writepid /dev/cpuset/system-background/tasks
